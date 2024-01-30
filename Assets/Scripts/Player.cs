@@ -2,24 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    public float speed = 5f; // Speed of the character movement
+    [SerializeField] private float moveSpeed = 7f;
 
-    void Update()
-    {
-        // Get the input from arrow keys
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
 
-        // Invert the input values to move in the correct direction
-        moveHorizontal *= -1f;
-        moveVertical *= -1f;
+    private void Update() {
+        Vector2 inputVector = new Vector2(0, 0);
 
-        // Calculate the movement direction
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        if (Input.GetKey(KeyCode.W))
+        {
+            inputVector.y = +1;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            inputVector.y = -1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            inputVector.x = -1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            inputVector.x = +1;
+        }
 
-        // Move the character based on the input
-        transform.Translate(movement * speed * Time.deltaTime);
+        inputVector = inputVector.normalized;
+
+        Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+        transform.position += moveSpeed * Time.deltaTime * moveDir;
+
+
+        float rotateSpeed = 10f;
+        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
     }
+
+
 }
