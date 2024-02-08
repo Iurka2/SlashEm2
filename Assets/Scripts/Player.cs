@@ -5,14 +5,43 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float runSpeed = 20f;
+//c [SerializeField] private float runSpeed = 20f;
     [SerializeField] private GameInput gameInput;
-
+    [SerializeField] private LayerMask wallLayerMask;
 
 
     private bool isWalking;
     private Vector3 lastInteracDir;
 
+
+
+    private void Start()
+    {
+        gameInput.onInteractAction += GameInput_onInteractAction;
+    }
+
+    private void GameInput_onInteractAction(object sender, System.EventArgs e)
+    {
+        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+
+        Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+
+
+        if (moveDir != Vector3.zero)
+        {
+            lastInteracDir = moveDir;
+        }
+
+
+        float interactDistance = 2f;
+        if (Physics.Raycast(transform.position, lastInteracDir, out RaycastHit raycastHit, interactDistance, wallLayerMask))
+        {
+            if (raycastHit.transform.TryGetComponent(out Wall Wall))
+            {
+                Wall.Interact();
+            }
+        }
+    }
 
     private void Update()
     {
@@ -38,12 +67,12 @@ public class Player : MonoBehaviour
 
 
         float interactDistance = 2f;
-        if (Physics.Raycast(transform.position, lastInteracDir, out RaycastHit raycastHit, interactDistance))
+        if (Physics.Raycast(transform.position, lastInteracDir, out RaycastHit raycastHit, interactDistance,wallLayerMask))
         {
-            Debug.Log(raycastHit.transform);
-        } else {
-            Debug.Log("-");  
-        }
+            if(raycastHit.transform.TryGetComponent(out Wall Wall))
+            {
+            }
+        } 
 
     }
     private void HadleMovement() {
