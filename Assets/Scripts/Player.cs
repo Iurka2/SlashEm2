@@ -1,11 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem.iOS;
 
 public class Player : MonoBehaviour
 {
+
+    public static Player Instance { get; private set;}
+
+    public event EventHandler OnSlectedWallChange;
+    public class OnSlectedWallChangeEventArgs : EventArgs
+    {
+        public CleanWall selectedWall;
+    }
     [SerializeField] private float moveSpeed = 7f;
-//c [SerializeField] private float runSpeed = 20f;
+    //c [SerializeField] private float runSpeed = 20f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask wallLayerMask;
 
@@ -14,6 +23,16 @@ public class Player : MonoBehaviour
     private Vector3 lastInteracDir;
     private CleanWall selectedWall;
 
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.Log("bad");
+        }
+
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -34,44 +53,50 @@ public class Player : MonoBehaviour
         HandleInteraction();
     }
 
-    public bool IsWalking() {
+    public bool IsWalking()
+    {
         return isWalking;
     }
 
 
-    private void HandleInteraction() {
+    private void HandleInteraction()
+    {
 
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
 
-        if (moveDir != Vector3.zero) {
+        if (moveDir != Vector3.zero)
+        {
             lastInteracDir = moveDir;
-        } 
+        }
 
 
         float interactDistance = 2f;
-        if (Physics.Raycast(transform.position, lastInteracDir, out RaycastHit raycastHit, interactDistance,wallLayerMask))
+        if (Physics.Raycast(transform.position, lastInteracDir, out RaycastHit raycastHit, interactDistance, wallLayerMask))
         {
-            if(raycastHit.transform.TryGetComponent(out CleanWall Wall))
+            if (raycastHit.transform.TryGetComponent(out CleanWall Wall))
             {
-                if (Wall != selectedWall) 
+                if (Wall != selectedWall)
                 {
-                    selectedWall = Wall;
+                    SetSelectedWall(Wall);
                 }
                 else
-               {
-                    selectedWall = null;
+                {
+                    SetSelectedWall(null);
                 }
             }
-         
+            else
+            {
+                SetSelectedWall(null);
+            }
 
-            Debug.Log(selectedWall);
-        } 
+        }
 
     }
-    private void HadleMovement() {
+    private void HadleMovement()
+    {
 
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
@@ -119,15 +144,27 @@ public class Player : MonoBehaviour
 
         if (canMove)
         {
-            transform.position += moveDir * moveDistance  ;
+            transform.position += moveDir * moveDistance;
         }
 
 
         isWalking = moveDir != Vector3.zero;
         float rotateSpeed = 10f;
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
+    
+        
+    
+    }
+
+    private void SetSelectedWall(CleanWall selectedWall)
+    {
+        this.selectedWall = selectedWall;
+
+        OnSlectedWallChange?.Invoke(this, new OnSlectedWallChangeEventArgs
+        {
+            selectedWall = selectedWall
+        });
     }
 
 
- 
 }
