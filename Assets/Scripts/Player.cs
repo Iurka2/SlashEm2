@@ -8,11 +8,11 @@ public class Player : MonoBehaviour
 
     public static Player Instance { get; private set;}
 
-    public event EventHandler OnSlectedWallChange;
-    public class OnSlectedWallChangeEventArgs : EventArgs
-    {
+    public event EventHandler <OnSlectedWallChangeEventArgs> OnSlectedWallChange;
+    public class OnSlectedWallChangeEventArgs : EventArgs {
         public CleanWall selectedWall;
     }
+
     [SerializeField] private float moveSpeed = 7f;
     //c [SerializeField] private float runSpeed = 20f;
     [SerializeField] private GameInput gameInput;
@@ -76,11 +76,11 @@ public class Player : MonoBehaviour
         float interactDistance = 2f;
         if (Physics.Raycast(transform.position, lastInteracDir, out RaycastHit raycastHit, interactDistance, wallLayerMask))
         {
-            if (raycastHit.transform.TryGetComponent(out CleanWall Wall))
+            if (raycastHit.transform.TryGetComponent(out CleanWall cleanWall))
             {
-                if (Wall != selectedWall)
+                if (cleanWall != selectedWall)
                 {
-                    SetSelectedWall(Wall);
+                    SetSelectedWall(cleanWall);
                 }
                 else
                 {
@@ -160,8 +160,7 @@ public class Player : MonoBehaviour
     {
         this.selectedWall = selectedWall;
 
-        OnSlectedWallChange?.Invoke(this, new OnSlectedWallChangeEventArgs
-        {
+        OnSlectedWallChange?.Invoke(this, new OnSlectedWallChangeEventArgs{
             selectedWall = selectedWall
         });
     }

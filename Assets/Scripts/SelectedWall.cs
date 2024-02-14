@@ -7,11 +7,12 @@ public class SelectedplayerVisual : MonoBehaviour
 
     [SerializeField] private CleanWall cleanWall;
     [SerializeField] private GameObject visualGameObject;
-    private void Start()
-    {
-        Player.Instance.OnSlectedWallChange += Player_OnSlectedWallChange;
 
-    }
+
+      private void Start()  {
+         Player.Instance.OnSlectedWallChange += Player_OnSlectedWallChange;
+
+        }
 
     private void Player_OnSlectedWallChange(object sender, Player.OnSlectedWallChangeEventArgs e)
     {
