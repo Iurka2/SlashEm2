@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
 
     public static Player Instance { get; private set; }
 
-    public event EventHandler<OnSlectedWallChangeEventArgs> OnSlectedWallChange;
+    public event EventHandler <OnSlectedWallChangeEventArgs> OnSlectedWallChange;
     public class OnSlectedWallChangeEventArgs : EventArgs {
         public CleanWall selectedWall;
     }
@@ -50,33 +50,37 @@ public class Player : MonoBehaviour {
 
 
     private void HandleInteraction() {
-
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
-
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
-
 
         if (moveDir != Vector3.zero) {
             lastInteracDir = moveDir;
         }
 
-
         float interactDistance = 2f;
-        if (Physics.Raycast(transform.position, lastInteracDir, out RaycastHit raycastHit, interactDistance, wallLayerMask)) {
+        RaycastHit raycastHit;
+
+        // Perform the raycast
+        if (Physics.Raycast(transform.position, lastInteracDir, out raycastHit, interactDistance, wallLayerMask)) {
             if (raycastHit.transform.TryGetComponent(out CleanWall cleanWall)) {
+                // Check if the wall is different from the current selected wall
                 if (cleanWall != selectedWall) {
                     SetSelectedWall(cleanWall);
                 }
-                else {
+                // Optionally, you can add a condition here to handle interactions with the same wall
+            }
+        }
+        else {
+            // If the raycast doesn't hit anything, check if the previous selected wall is still within range
+            if (selectedWall != null) {
+                // Check if the previous selected wall is still within range
+                float distanceToPreviousWall = Vector3.Distance(selectedWall.transform.position, transform.position);
+                if (distanceToPreviousWall > interactDistance) {
+                    // If the previous selected wall is no longer within range, deselect it
                     SetSelectedWall(null);
                 }
             }
-            else {
-                SetSelectedWall(null);
-            }
-
         }
-
     }
     private void HadleMovement() {
 
@@ -85,7 +89,7 @@ public class Player : MonoBehaviour {
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
         float moveDistance = moveSpeed * Time.deltaTime;
-        float playerRadius = 1f;
+        float playerRadius = 0.65f;
         float playerHeight = 1f;
 
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
