@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ac49f3c5e5dbf43a4e03a045c587ae, type: 3}
   m_Name: UZI
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4952727429218122, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
+  prefab: {fileID: 4907130060635364, guid: 6273e2936e9d6a24e9f64c7c70d6bd19, type: 3}
   sprite: {fileID: 0}
-  objectName: M1911
+  objectName: UZI
