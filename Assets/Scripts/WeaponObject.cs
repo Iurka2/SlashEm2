@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponObject : MonoBehaviour
@@ -7,17 +5,28 @@ public class WeaponObject : MonoBehaviour
 
     [SerializeField] private WeaponSS weaponSS;
 
-    private CleanWall cleanWall;
+    private IWeaponParent weaponObjectParent;
 
     public WeaponSS GetWeaponSS() {
         return weaponSS;
     }
 
-    public void SetCleanWall(CleanWall cleanWall ) {
-        this.cleanWall = cleanWall;
+    public void SetWeaponObjectParent(IWeaponParent weaponObjectParent) {
+        if(this.weaponObjectParent != null) {
+            this.weaponObjectParent.ClearWeaponObject();
+        }
+
+        this.weaponObjectParent = weaponObjectParent;
+        if (weaponObjectParent.HasWeaponObject()) {
+            Debug.LogError("wall has gun dumbass ");
+        }
+        weaponObjectParent.setWeaponObject(this);
+
+        transform.parent = weaponObjectParent.GetWeaponObjectFollowTransofrm();
+        transform.localPosition = Vector3.zero;
     }
 
-    public CleanWall GetCleanWall ( ) {
-        return cleanWall;
+    public IWeaponParent GetWeaponParent ( Player player ) {
+        return weaponObjectParent;
     }
 }

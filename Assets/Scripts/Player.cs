@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour,IWeaponParent {
 
     public static Player Instance { get; private set; }
 
@@ -14,12 +14,12 @@ public class Player : MonoBehaviour {
     //c [SerializeField] private float runSpeed = 20f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask wallLayerMask;
-
+    [SerializeField] private Transform SpawnPoint;
 
     private bool isWalking;
     private Vector3 lastInteracDir;
     private CleanWall selectedWall;
-
+    private WeaponObject weaponObject;
 
     private void Awake() {
         if (Instance != null) {
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour {
 
     private void GameInput_onInteractAction(object sender, System.EventArgs e) {
         if (selectedWall != null) {
-            selectedWall.Interact();
+            selectedWall.Interact(this);
         }
     }
 
@@ -144,5 +144,23 @@ public class Player : MonoBehaviour {
         });
     }
 
+    public Transform GetWeaponObjectFollowTransofrm ( ) {
+        return SpawnPoint;
+    }
 
+    public void setWeaponObject ( WeaponObject weaponObject ) {
+        this.weaponObject = weaponObject;
+    }
+
+    public WeaponObject GetWeaponObject ( ) {
+        return weaponObject;
+    }
+
+    public void ClearWeaponObject ( ) {
+        weaponObject = null;
+    }
+
+    public bool HasWeaponObject ( ) {
+        return weaponObject != null;
+    }
 }
