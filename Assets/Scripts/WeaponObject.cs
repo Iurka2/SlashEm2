@@ -26,7 +26,7 @@ public class WeaponObject : MonoBehaviour
         transform.localPosition = Vector3.zero;
     }
 
-    public IWeaponParent GetWeaponParent ( Player player ) {
+    public IWeaponParent GetWeaponParent () {
         return weaponObjectParent;
     }
 }

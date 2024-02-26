@@ -4,20 +4,11 @@ public class CleanWall : MonoBehaviour,IWeaponParent {
 
     [SerializeField] private WeaponSS M1911;
     [SerializeField] private Transform SpawnPoint;
-    [SerializeField] private CleanWall secondWall;
-    [SerializeField] private bool testing ;
+
 
     private WeaponObject weaponObject;
 
-    private void Update ( ) {
-        if (testing && Input.GetKeyDown(KeyCode.T))
-        {
-            if (weaponObject != null) {
-                weaponObject.SetWeaponObjectParent(secondWall);
-               
-            }
-        }
-    }
+ 
     public void Interact(Player player) {
         if (weaponObject == null) {
 
