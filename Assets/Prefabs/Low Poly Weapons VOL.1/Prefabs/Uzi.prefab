@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4053049694707180}
   - component: {fileID: 33453223075324624}
   - component: {fileID: 23955289606062604}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,10 +94,9 @@ GameObject:
   - component: {fileID: 4907130060635364}
   - component: {fileID: 33804178515757422}
   - component: {fileID: 23702528113249380}
-  - component: {fileID: 5685446572436821199}
   - component: {fileID: 7738487143268519072}
   - component: {fileID: -5975168845369262656}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Uzi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,33 +172,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &5685446572436821199
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1095254202041702}
-  serializedVersion: 4
-  m_Mass: 3
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &7738487143268519072
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -245,7 +217,7 @@ GameObject:
   - component: {fileID: 4647490109771344}
   - component: {fileID: 33854016969116716}
   - component: {fileID: 23313843289556852}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +301,7 @@ GameObject:
   - component: {fileID: 4005219759321252}
   - component: {fileID: 33545146177185778}
   - component: {fileID: 23185418572402374}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Magazin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +384,7 @@ GameObject:
   - component: {fileID: 4172847797108098}
   - component: {fileID: 33463821814610566}
   - component: {fileID: 23006419205827756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +467,7 @@ GameObject:
   - component: {fileID: 4247028893976260}
   - component: {fileID: 33627599256676078}
   - component: {fileID: 23251919665667156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stock_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
