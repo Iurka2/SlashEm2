@@ -11,7 +11,10 @@ public class WeaponObject : MonoBehaviour
         return weaponSS;
     }
 
-  
+/*    public bool IsOnGround ( ) {
+        float groundCheckDistance = 0.5f;  // Adjust as needed
+        return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
+    }*/
 
     public void SetWeaponObjectParent(IWeaponParent weaponObjectParent) {
         if(this.weaponObjectParent != null) {
@@ -21,7 +24,7 @@ public class WeaponObject : MonoBehaviour
         this.weaponObjectParent = weaponObjectParent;
         if (weaponObjectParent.HasWeaponObject()) {
             weaponObjectParent.GetWeaponObject().DropWeapon();
-            Debug.Log(weaponObjectParent);
+           
         }
 
         weaponObjectParent.setWeaponObject(this);
@@ -29,19 +32,23 @@ public class WeaponObject : MonoBehaviour
         transform.localPosition = Vector3.zero;
 
     }
-    private string weaponLayerName = "Pistol";
-    public void DropWeapon ( ) {
-        
+
+    public void DropWeapon () {
+
         weaponObjectParent = null; // Clear weapon parent
-        gameObject.layer = LayerMask.NameToLayer(weaponLayerName); // Make interactable
+        transform.parent = null; // Detach from any parent
+
         gameObject.AddComponent<Rigidbody>(); // Add physics for dropping effect (adjust colliders if needed)
-        RaycastHit hit;
+     /*   RaycastHit hit;
         if(Physics.Raycast(transform.position, Vector3.down, out hit)) {
             transform.parent = hit.transform; // Assign the hit object as the parent
-        }
-        Debug.Log(weaponObjectParent);
-     
+        }*/
+
     }
+
+
+
+
 
     public IWeaponParent GetWeaponParent () {
         return weaponObjectParent;

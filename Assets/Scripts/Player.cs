@@ -10,6 +10,8 @@
             public CleanWall selectedWall;
         }
 
+
+
         [SerializeField] private float moveSpeed = 7f;
         //c [SerializeField] private float runSpeed = 20f;
         [SerializeField] private GameInput gameInput;
@@ -31,18 +33,33 @@
 
         private void Start() {
             gameInput.onInteractAction += GameInput_onInteractAction;
-    
+
     }
 
 
 
-    private void GameInput_onInteractAction(object sender, System.EventArgs e) {
-            if (selectedWall != null) {
-                selectedWall.Interact(this);
+
+
+    private void GameInput_onInteractAction ( object sender, System.EventArgs e ) {
+        if(selectedWall != null) {
+            selectedWall.Interact(this);
+        } 
+    }
+
+/*    private void TryPickupWeaponFromGround ( ) {
+        float interactDistance = 2f;
+        string weaponLayer = "Pistol";
+
+        if(Physics.Raycast(transform.position, lastInteracDir, out RaycastHit raycastHit, interactDistance, LayerMask.GetMask(weaponLayer))) {
+            if(raycastHit.transform.TryGetComponent(out WeaponObject weaponObject)) {
+                if(weaponObject.IsOnGround()) {
+                    weaponObject.SetWeaponObjectParent(this);
+                }
             }
         }
+    }*/
 
-        private void Update() {
+    private void Update() {
             HadleMovement();
             HandleInteraction();
         }
@@ -50,6 +67,8 @@
         public bool IsWalking() {
             return isWalking;
         }
+
+
 
 
         private void HandleInteraction() {
@@ -65,6 +84,7 @@
 
             // Perform the raycast
             if (Physics.Raycast(transform.position, lastInteracDir, out raycastHit, interactDistance, wallLayerMask)) {
+            Debug.Log(raycastHit);
                 if (raycastHit.transform.TryGetComponent(out CleanWall cleanWall)) {
                     // Check if the wall is different from the current selected wall
                     if (cleanWall != selectedWall) {
@@ -94,7 +114,8 @@
             float moveDistance = moveSpeed * Time.deltaTime;
             float playerRadius = 0.65f;
             float playerHeight = 1f;
-
+/*            string weaponLayer = "Pistol";
+*/
             bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
 
 
