@@ -62,6 +62,7 @@
     private void Update() {
             HadleMovement();
             HandleInteraction();
+            HandleInteraction2();
         }
 
         public bool IsWalking() {
@@ -69,6 +70,21 @@
         }
 
 
+
+    private void HandleInteraction2 ( ) {
+
+        if(Input.GetKeyDown(KeyCode.E)) {
+
+            float interactRange = 2f;
+            Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
+            foreach(Collider collider in colliderArray) {
+                if(collider.TryGetComponent(out WeaponPrefab weaponPrefab)) {
+                    weaponPrefab.Interact(this);
+                }
+                
+            }
+        }
+    }
 
 
         private void HandleInteraction() {
