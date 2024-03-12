@@ -35,7 +35,7 @@ public class WeaponObject : MonoBehaviour
 
     public void DropWeapon () {
 
-        /*weaponObjectParent = null; // Clear weapon parent*/
+        weaponObjectParent = null; // Clear weapon parent
         transform.parent = null; // Detach from any parent
 
         gameObject.AddComponent<Rigidbody>(); // Add physics for dropping effect (adjust colliders if needed)
